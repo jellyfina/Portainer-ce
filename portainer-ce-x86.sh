@@ -56,7 +56,7 @@ echo "现在开始安装Portainer"
 
 
 
-docker run -d --restart=always --name="portainer" -p $port:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data -v $webdir/public:/public portainer/portainer-ce:2.11.1
+docker run -d --restart=always --name="portainer" -p $port:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data -v $webdir/public:/public jellyfina/portainer-ce
 
 
 if [ "docker inspect --format '{{.State.Running}}' portainer" != "true" ]
