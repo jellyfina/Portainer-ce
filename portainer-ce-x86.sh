@@ -21,11 +21,11 @@ clear
 [[ $EUID -ne 0 ]] && echo -e "\033[31m错误: 必须使用root用户运行此脚本！\033[0m" && exit 1
 
 echo -e "输入portainer汉化文件安装目录:\n"
-read -p "输入目录名,留空默认:${red} $name: " webdir
+read -p "输入目录名,留空默认:${red} $name ${plain}: " webdir
     if [[ ! -n "$webdir" ]]; then
         webdir=$name
     fi
-read -p "输入服务端口（请避开已使用的端口）留空默认${red}[$nport]: " port
+read -p "输入服务端口（请避开已使用的端口）留空默认${red}[$nport]${plain}: " port
     if [[ ! -n "$port" ]]; then
         port=$nport
     fi
@@ -66,7 +66,7 @@ docker run -d --restart=always --name="portainer" -p $port:9000 -v /var/run/dock
 if [ "docker inspect --format '{{.State.Running}}' portainer" != "true" ]
 then {
 echo -e "=================================================================="
-echo -e "portainer部署成功，使用外网访问管理地址时请先做好\033[31m端口映射\033[0m"
+echo -e "portainer部署成功，使用外网访问管理地址时请先做好 \033[31m端口映射\033[0m"
 echo -e "=================================================================="
 echo -e "\033[31m外网管理地址:\033[0m http://$address:$port "
 echo -e "\033[31m内网管理地址:\033[0m http://$ip:$port "
