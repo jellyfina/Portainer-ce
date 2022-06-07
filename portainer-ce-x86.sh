@@ -3,10 +3,15 @@
 red='\033[0;31m'
 plain='\033[0m'
 #内网ip地址获取
-ip=$(ifconfig | grep "inet addr" | awk '{ print $2}' | awk -F: '{print $2}' | awk 'NR==1')
+#ip=$(ifconfig | grep "inet addr" | awk '{ print $2}' | awk -F: '{print $2}' | awk 'NR==1')
+ip=$(ip addr | grep -E -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -E -v "^127\.|^255\.|^0\." | head -n 1)
 if [[ ! -n "$ip" ]]; then
     ip="你的路由器IP"
 fi
+if [ "$address" = "" ];then
+address=$(curl -sS --connect-timeout 10 -m 60 https://www.bt.cn/Api/getIpAddress)
+fi
+
 #默认安装目录/root
 name=/root
 #默认安装端口
@@ -61,7 +66,9 @@ docker run -d --restart=always --name="portainer" -p $port:9000 -v /var/run/dock
 
 if [ "docker inspect --format '{{.State.Running}}' portainer" != "true" ]
 then {
-echo -e "portainer部署成功，${red}浏览器访问$ip:$port \c"
+echo -e "portainer部署成功${red}"
+echo -e "外网管理地址：http://$address:$port \c"
+echo -e "内网管理地址：http://$ip:$port \c"
 echo -e "${plain}"
 }
 else
