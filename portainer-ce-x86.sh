@@ -52,12 +52,12 @@ docker rm portainer
 docker rmi $(docker images | grep portai | tr -s ' ' | cut -d ' ' -f 3)
 
 echo -e "\033[32m==================================================================\033[0m"
-echo -e "\033[33m首次重置portainer账户密码时提示\033[0m \033[31mError\033[0m \033[33m错误提示属正常现象，无需理会\033[0m"
+echo -e "\033[33m首次重置portainer账户密码时出现\033[0m \033[31mError\033[0m \033[33m错误提示属正常现象，无需理会\033[0m"
 read -p "是否重置portainer账户密码(首次安装直接输入 y )[y/n]" user
 case $user in
     y) docker volume rm portainer_data;;
 n) echo "不重置，你将使用之前安装的portainer账户密码";;
-*) echo "你输入的不是 y/n"
+*) echo "你输入的不是 y/n，已退出安装"
 exit;;
 esac
 echo -e "\033[32m==================================================================\033[0m"
