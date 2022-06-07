@@ -5,7 +5,7 @@ plain='\033[0m'
 #ip=$(ifconfig | grep "inet addr" | awk '{ print $2}' | awk -F: '{print $2}' | awk 'NR==1')
 ip=$(ip addr | grep -E -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -E -v "^127\.|^255\.|^0\." | head -n 1)
 if [[ ! -n "$ip" ]]; then
-    ip="你的路由器IP"
+    ip="你的内网IP"
 fi
 #外网IP地址获取
 if [ "$address" = "" ];then
@@ -27,7 +27,7 @@ read -p "输入目录名,留空默认安装目录是: ($name): " webdir
     fi
 echo -e "\033[32m==================================================================\033[0m"
  echo -e "${red}"  
-read -p "输入服务端口（请避开已使用的端口）留空默认[$nport]: " port
+read -p "输入服务端口（请避开已使用的端口）留空默认服务端口是($nport): " port
 echo -e "${plain}"
     if [[ ! -n "$port" ]]; then
         port=$nport
@@ -59,8 +59,9 @@ n) echo "不重置，你将使用之前安装的portainer账户密码";;
 *) echo "你输入的不是 y/n"
 exit;;
 esac
-echo "现在开始安装Portainer"
 echo -e "\033[32m==================================================================\033[0m"
+echo "正在开始安装Portainer并进行汉化："
+
 
 
 docker run -d --restart=always --name="portainer" -p $port:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data -v $webdir/public:/public jellyfina/portainer-ce
@@ -70,7 +71,7 @@ if [ "docker inspect --format '{{.State.Running}}' portainer" != "true" ]
 then {
 echo -e "\033[32m==================================================================\033[0m"
 echo -e "portainer部署成功，使用外网访问管理地址时请先做好 \033[31m端口映射\033[0m"
-echo -e "=================================================================="
+echo -e "\033[32m==================================================================\033[0m"
 echo -e "\033[31m外网管理地址:\033[0m http://$address:$port "
 echo -e "\033[31m内网管理地址:\033[0m http://$ip:$port "
 echo -e "\033[32m==================================================================\033[0m"
