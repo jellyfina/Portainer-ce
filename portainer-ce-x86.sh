@@ -20,12 +20,13 @@ clear
 # check root
 [[ $EUID -ne 0 ]] && echo -e "\033[31m错误: 必须使用root用户运行此脚本！\033[0m" && exit 1
 
-echo -e "输入portainer汉化文件安装目录:\n"
-read -p "输入目录名,留空默认: (\033[31m/root\033[0m): " webdir
+echo -e "输入portainer汉化文件安装目录:${red}\n"
+read -p "输入目录名,留空默认安装目录是: ($name): " webdir
     if [[ ! -n "$webdir" ]]; then
         webdir=$name
     fi
-read -p "输入服务端口（请避开已使用的端口）留空默认${red}[$nport]${plain}: " port
+ echo -e "${red}"  
+read -p "输入服务端口（请避开已使用的端口）留空默认[$nport]: " port
     if [[ ! -n "$port" ]]; then
         port=$nport
     fi
