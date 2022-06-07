@@ -8,8 +8,9 @@ ip=$(ip addr | grep -E -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | gre
 if [[ ! -n "$ip" ]]; then
     ip="你的路由器IP"
 fi
+外网IP地址获取
 if [ "$address" = "" ];then
-address=$(curl -sS --connect-timeout 10 -m 60 https://www.bt.cn/Api/getIpAddress)
+address=$(curl -sS --connect-timeout 10 -m 60 http://members.3322.org/dyndns/getip)
 fi
 
 #默认安装目录/root
@@ -66,10 +67,12 @@ docker run -d --restart=always --name="portainer" -p $port:9000 -v /var/run/dock
 
 if [ "docker inspect --format '{{.State.Running}}' portainer" != "true" ]
 then {
-echo -e "portainer部署成功${red}"
-echo -e "外网管理地址：http://$address:$port \c"
-echo -e "内网管理地址：http://$ip:$port \c"
-echo -e "${plain}"
+echo -e "=================================================================="
+echo -e "portainer部署成功，使用外网访问管理地址时请先做好端口映射"
+echo -e "=================================================================="
+echo -e "\033[31m 外网管理地址：\033[0m http://$address:$port "
+echo -e "\033[31m 内网管理地址：\033[0mhttp://$ip:$port "
+echo -e "=================================================================="
 }
 else
 {
