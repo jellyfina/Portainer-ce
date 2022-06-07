@@ -1,7 +1,5 @@
 #!/bin/bash
 
-red='\033[0;31m'
-plain='\033[0m'
 #内网ip地址获取
 #ip=$(ifconfig | grep "inet addr" | awk '{ print $2}' | awk -F: '{print $2}' | awk 'NR==1')
 ip=$(ip addr | grep -E -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -E -v "^127\.|^255\.|^0\." | head -n 1)
@@ -19,15 +17,14 @@ name=/root
 nport=9999
 clear
 # check root
-[[ $EUID -ne 0 ]] && echo -e "${red}错误: ${plain} 必须使用root用户运行此脚本！\n" && exit 1
+[[ $EUID -ne 0 ]] && echo -e "\033[31m错误: 必须使用root用户运行此脚本！\033[0m" && exit 1
 
-echo -e "输入portainer汉化文件安装目录：${red} \n（必须是绝对路径如：/opt，不懂的直接回车，默认目录$name）\n"
-read -p "输入目录名（留空默认：$name）: " webdir
-echo -e "${plain}"
+echo -e "输入portainer汉化文件安装目录：${red} \n"
+read -p "输入目录名（留空默认:\033[31m $name \033[0m）: " webdir
     if [[ ! -n "$webdir" ]]; then
         webdir=$name
     fi
-read -p "输入服务端口（请避开已使用的端口）[留空默认$nport]: " port
+read -p "输入服务端口（请避开已使用的端口）[留空默认\033[31m $nport \033[0m]: " port
     if [[ ! -n "$port" ]]; then
         port=$nport
     fi
@@ -70,12 +67,12 @@ then {
 echo -e "=================================================================="
 echo -e "portainer部署成功，使用外网访问管理地址时请先做好端口映射"
 echo -e "=================================================================="
-echo -e "\033[31m 外网管理地址：\033[0m http://$address:$port "
-echo -e "\033[31m 内网管理地址：\033[0mhttp://$ip:$port "
+echo -e "\033[31m外网管理地址:\033[0m http://$address:$port "
+echo -e "\033[31m内网管理地址:\033[0m http://$ip:$port "
 echo -e "=================================================================="
 }
 else
 {
-    echo "抱歉，portainer安装失败，多运行几次脚本或者检查网络是否正常访问GitHub"
+    echo "抱歉，portainer安装失败，请尝试多运行几次脚本或者检查网络是否正常"
 }
 fi
