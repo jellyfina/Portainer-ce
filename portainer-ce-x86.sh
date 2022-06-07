@@ -21,7 +21,7 @@ clear
 [[ $EUID -ne 0 ]] && echo -e "\033[31m错误: 必须使用root用户运行此脚本！\033[0m" && exit 1
 
 echo -e "输入portainer汉化文件安装目录:\n"
-read -p "输入目录名,留空默认:${red} $name ${plain}: " webdir
+read -p "输入目录名,留空默认: (\033[31m/root\033[0m): " webdir
     if [[ ! -n "$webdir" ]]; then
         webdir=$name
     fi
