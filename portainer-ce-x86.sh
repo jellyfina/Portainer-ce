@@ -6,7 +6,7 @@ ip=$(ip addr | grep -E -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | gre
 if [[ ! -n "$ip" ]]; then
     ip="你的路由器IP"
 fi
-外网IP地址获取
+#外网IP地址获取
 if [ "$address" = "" ];then
 address=$(curl -sS --connect-timeout 10 -m 60 http://members.3322.org/dyndns/getip)
 fi
@@ -20,11 +20,11 @@ clear
 [[ $EUID -ne 0 ]] && echo -e "\033[31m错误: 必须使用root用户运行此脚本！\033[0m" && exit 1
 
 echo -e "输入portainer汉化文件安装目录:\n"
-read -p "输入目录名（留空默认:\033[31m $name \033[0m）: " webdir
+read -p "输入目录名,留空默认:\033[31m $name \033[0m: " webdir
     if [[ ! -n "$webdir" ]]; then
         webdir=$name
     fi
-read -p "输入服务端口（请避开已使用的端口）[留空默认\033[31m $nport \033[0m]: " port
+read -p "输入服务端口（请避开已使用的端口）留空默认\033[31m $nport \033[0m: " port
     if [[ ! -n "$port" ]]; then
         port=$nport
     fi
