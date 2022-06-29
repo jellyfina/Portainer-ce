@@ -11,6 +11,12 @@ fi
 if [ "$address" = "" ];then
 address=$(curl ipip.ooo)
 fi
+
+#默认安装目录/root
+name=/root
+#默认安装端口
+nport=9999
+clear
 #检查并安装Docker
 	echo '-------------------------------------------'
 	docker_path=$(which docker)
@@ -32,11 +38,6 @@ fi
 	#启动docker
 	systemctl start docker
 	echo '-------------------------------------------'
-#默认安装目录/root
-name=/root
-#默认安装端口
-nport=9999
-clear
 # check root
 [[ $EUID -ne 0 ]] && echo -e "\033[31m错误: 必须使用root用户运行此脚本！\033[0m" && exit 1
 echo -e "\033[32m==================================================================\033[0m"
