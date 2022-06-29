@@ -12,7 +12,6 @@ if [ "$address" = "" ];then
 address=$(curl ipip.ooo)
 fi
 #检查并安装Docker
-function check_docker(){
 	echo '-------------------------------------------'
 	docker_path=$(which docker)
 	if [ -e "${docker_path}" ]
@@ -33,7 +32,6 @@ function check_docker(){
 	#启动docker
 	systemctl start docker
 	echo '-------------------------------------------'
-}
 #默认安装目录/root
 name=/root
 #默认安装端口
@@ -104,4 +102,4 @@ else
     echo "抱歉，portainer安装失败，请尝试多运行几次脚本或者检查网络是否正常"
 }
 fi
-check_docker
+
