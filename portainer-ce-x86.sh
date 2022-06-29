@@ -9,9 +9,31 @@ if [[ ! -n "$ip" ]]; then
 fi
 #外网IP地址获取
 if [ "$address" = "" ];then
-address=$(curl -sS --connect-timeout 10 -m 60 http://members.3322.org/dyndns/getip)
+address=$(curl ipip.ooo)
 fi
-
+#检查并安装Docker
+function check_docker(){
+	echo '-------------------------------------------'
+	docker_path=$(which docker)
+	if [ -e "${docker_path}" ]
+	then
+		echo 'Docker已安装，继续执行'
+	else
+		read -p "Docker未安装，是否安装Docker?(y/n):" is_docker
+		if [ $is_docker == 'y' ]
+			then
+				curl -fsSL https://get.docker.com -o get-docker.sh
+				sh get-docker.sh
+			else
+				echo '放弃安装！'
+				echo '-------------------------------------------'
+				exit
+		fi
+	fi
+	#启动docker
+	systemctl start docker
+	echo '-------------------------------------------'
+}
 #默认安装目录/root
 name=/root
 #默认安装端口
