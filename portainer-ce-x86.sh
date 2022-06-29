@@ -104,3 +104,4 @@ else
     echo "抱歉，portainer安装失败，请尝试多运行几次脚本或者检查网络是否正常"
 }
 fi
+check_docker
