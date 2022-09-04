@@ -36,6 +36,7 @@ clear
 		fi
 	fi
 	#启动docker
+	systemctl enable docker
 	systemctl start docker
 	echo '-------------------------------------------'
 # check root
