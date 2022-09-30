@@ -9,7 +9,7 @@ if [[ ! -n "$ip" ]]; then
 fi
 #外网IP地址获取
 if [ "$address" = "" ];then
-address=$(curl ipip.ooo)
+address=$(curl http://members.3322.org/dyndns/getip)
 fi
 
 #默认安装目录/root
