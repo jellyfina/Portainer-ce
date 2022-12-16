@@ -42,7 +42,7 @@ clear
 # check root
 [[ $EUID -ne 0 ]] && echo -e "\033[31m错误: 必须使用root用户运行此脚本！\033[0m" && exit 1
 echo -e "\033[32m==================================================================\033[0m"
-echo -e "输入portainer汉化文件安装目录，群晖部署目录如：/volume1/docker/portainer:${red}\n"
+echo -e "输入portainer汉化文件安装目录，群晖部署目录如：/volume1/docker/portainer${red}\n"
 read -p "输入目录名,留空默认安装目录是: ($name): " webdir
     if [[ ! -n "$webdir" ]]; then
         webdir=$name
