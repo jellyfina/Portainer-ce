@@ -37,6 +37,7 @@ clear
 	echo '-------------------------------------------'
 # check root
 [[ $EUID -ne 0 ]] && echo -e "\033[31m错误: 必须使用root用户运行此脚本！\033[0m" && exit 1
+cd /root
 curl -sL https://raw.650070.xyz/jellyfina/portainer-ce/main/public.tar.gz | tar xz
 echo -e "\033[32m==================================================================\033[0m"
 echo -e "\033[33m首次部署portainer时如出现\033[0m \033[31mError\033[0m \033[33m错误提示属正常现象，无需理会\033[0m"
