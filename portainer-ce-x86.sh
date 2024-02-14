@@ -12,10 +12,6 @@ if [ "$address" = "" ];then
 address=$(curl https://ip.3322.net)
 fi
 
-#默认安装目录/root
-name=/root
-#默认安装端口
-nport=9999
 clear
 #检查并安装Docker
 	echo '-------------------------------------------'
@@ -41,25 +37,6 @@ clear
 	echo '-------------------------------------------'
 # check root
 [[ $EUID -ne 0 ]] && echo -e "\033[31m错误: 必须使用root用户运行此脚本！\033[0m" && exit 1
-echo -e "\033[32m==================================================================\033[0m"
-echo -e "输入portainer汉化文件安装目录，群晖部署目录如：/volume1/docker/portainer${red}\n"
-read -p "输入目录名,留空默认安装目录是: ($name): " webdir
-    if [[ ! -n "$webdir" ]]; then
-        webdir=$name
-    fi
-echo -e "\033[32m==================================================================\033[0m"
- echo -e "${red}"  
-read -p "输入服务端口（请避开已使用的端口）留空默认服务端口是($nport): " port
-echo -e "${plain}"
-    if [[ ! -n "$port" ]]; then
-        port=$nport
-    fi
-if [[ ! -d "$webdir" ]] ; then
-mkdir -p $webdir
-cd $webdir
-else
-cd $webdir
-fi
 curl -sL https://raw.650070.xyz/jellyfina/portainer-ce/main/public.tar.gz | tar xz
 echo -e "\033[32m==================================================================\033[0m"
 echo -e "\033[33m首次部署portainer时如出现\033[0m \033[31mError\033[0m \033[33m错误提示属正常现象，无需理会\033[0m"
@@ -87,7 +64,7 @@ echo "正在开始安装Portainer并进行汉化："
 
 
 
-docker run -d --restart=always --name="portainer" -p $port:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data -v $webdir/public:/public jellyfina/portainer-ce
+docker run -d --restart=always --name="portainer" -p 9999:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data -v /root/public:/public jellyfina/portainer-ce
 
 
 if [ "docker inspect --format '{{.State.Running}}' portainer" != "true" ]
@@ -95,8 +72,8 @@ then {
 echo -e "\033[32m==================================================================\033[0m"
 echo -e "portainer部署成功，使用外网访问管理地址时请先做好 \033[31m端口映射\033[0m"
 echo -e "\033[32m==================================================================\033[0m"
-echo -e "\033[31m外网管理地址:\033[0m http://$address:$port "
-echo -e "\033[31m内网管理地址:\033[0m http://$ip:$port "
+echo -e "\033[31m外网管理地址:\033[0m http://$address:9999 "
+echo -e "\033[31m内网管理地址:\033[0m http://$ip:9999 "
 echo -e "\033[32m==================================================================\033[0m"
 }
 else
